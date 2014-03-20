@@ -690,7 +690,7 @@ class YahooWeather
     private function WindDegreesToCardinal($degree) 
     {   
         if($degree == 0) $direction = '';
-        if($degree >= 348.75 && $degree <=  11.25) $direction = 'N';
+        if($degree >= 348.75 || $degree <=  11.25) $direction = 'N';
         if($degree >   11.25 && $degree <=  33.75) $direction = 'NNE';
         if($degree >   33.75 && $degree <=  56.25) $direction = 'NE';
         if($degree >   56.25 && $degree <=  78.75) $direction = 'ENE';
