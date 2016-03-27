@@ -1,4 +1,8 @@
 <?php
+include_once(dirname(__FILE__) . '/yosdk/lib/Yahoo.inc');
+
+YahooLogger::setDebug(false);
+
 /**
  * YahooWeather Class
  * 
@@ -36,20 +40,35 @@ class YahooWeather
      * @param string $unit default = 'f'. Use 'f' for °Fahrenheit or 'c' for °Celsius. **If you use Celsius, all other units will be metric units as well!**
      * @access public
      */
-    public function __construct($woeid = 2442047, $unit = 'f') 
+    public function __construct($consumerKey, $consumerSecret, $applicationId, $woeid = 2442047, $unit = 'f') 
     {
         $this->woeid = $woeid;
         $this->unit = $unit;
         
+        // Get a session first. If the viewer isn't sessioned yet, this call 
+        // will redirect them to log in and authorize your application to 
+        //$session = YahooSession::requireSession($consumerKey, $consumerSecret, $applicationId);
+
+        $yahoo_apps = new YahooApplication ($consumerKey, $consumerSecret);
+        
+        //Maybe we'll use yql later, but for now just use wht old forecast rss feed.
+        //$query = "select atmosphere,item.condition from weather.forecast where woeid=\"" . $this->woeid . "\"";
+        //$results = $yahoo_apps->query ($query);
+        //echo print_r ($results);
+
+        //echo "<br /><br /><br />Weather:<br />";
+        $weather = $yahoo_apps->weather($this->woeid, $this->unit);
+        //echo print_r ($weather);
+        
         /* Let's use cURL to query the API and get all the XML data */
-        $curlobj = curl_init();
-        curl_setopt($curlobj, CURLOPT_URL, 'http://weather.yahooapis.com/forecastrss?w='.$this->woeid.'&u='.$this->unit);
-        curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, 1);
-        $yahooapi = curl_exec($curlobj);
-        curl_close($curlobj);   
+        //$curlobj = curl_init();
+        //curl_setopt($curlobj, CURLOPT_URL, 'http://weather.yahooapis.com/forecastrss?w='.$this->woeid.'&u='.$this->unit);
+        //curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, 1);
+        //$yahooapi = curl_exec($curlobj);
+        //curl_close($curlobj);   
         
         /* Now let's create a weather object of the returned XML */
-        $this->weather = new SimpleXMLElement($yahooapi);
+        $this->weather = new SimpleXMLElement($weather);
         
         /* Some object items, we will use for our functions */
         $this->weather_location = $this->weather->channel->xpath('yweather:location');
