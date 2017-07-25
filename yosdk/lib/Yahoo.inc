@@ -15,7 +15,7 @@ define("SOCIAL_WS_HOSTNAME", "social.yahooapis.com");
 define("PRESENCE_WS_HOSTNAME", "social.yahooapis.com");
 define("UPDATES_WS_HOSTNAME", "social.yahooapis.com");
 define("QUERY_WS_HOSTNAME", "query.yahooapis.com");
-define("WEATHER_WS_HOSTNAME", "weather.yahooapis.com");
+define("WEATHER_WS_HOSTNAME", "weather-ydn-yql.media.yahoo.com");
 define("OAUTH_HOSTNAME", "api.login.yahoo.com");
 define("YAP_WS_HOSTNAME", "appstore.apps.yahooapis.com");
 
